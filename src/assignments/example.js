@@ -4,7 +4,7 @@ function App() {
   const [toDo, setToDo] = useState("");
   const [toDos, setToDos] = useState([]);
 
-  // 1. 앱 시작 시 localStorage에서 불러오기
+  // 앱 시작 시 localStorage에서 불러오기
   useEffect(() => {
     const savedToDos = localStorage.getItem("toDos");
     if (savedToDos) {
@@ -12,7 +12,7 @@ function App() {
     }
   }, []);
 
-  // 2. toDos가 바뀔 때마다 localStorage에 저장하기
+  // toDos가 바뀔 때마다 localStorage에 저장하기
   useEffect(() => {
     localStorage.setItem("toDos", JSON.stringify(toDos));
   }, [toDos]);
@@ -23,7 +23,7 @@ function App() {
     if (toDo == "") {
       return;
     }
-    setToDos((currentArray) => [toDo, ...currentArray]);
+    setToDos((currentArray) => [...currentArray, toDo]);
 
     setToDo("");
   };
