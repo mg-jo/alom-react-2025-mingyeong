@@ -1,11 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  // 과제1-1: 7-1, 7-2강을 듣고 이곳에 투두리스트 컴포넌트를 작성해주세요.
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+
+  // 1. 앱 시작 시 localStorage에서 불러오기
+  useEffect(() => {
+    const savedToDos = localStorage.getItem("toDos");
+    if (savedToDos) {
+      setToDos(JSON.parse(savedToDos));
+    }
+  }, []);
+
+  // 2. toDos가 바뀔 때마다 localStorage에 저장하기
+  useEffect(() => {
+    localStorage.setItem("toDos", JSON.stringify(toDos));
+  }, [toDos]);
+
+  const onChange = (event) => setToDo(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault(); // 새로고침 방지
+    if (toDo == "") {
+      return;
+    }
+    setToDos((currentArray) => [toDo, ...currentArray]);
+
+    setToDo("");
+  };
+  const deleteToDo = (indexToDelete) => {
+    setToDos((currentArray) =>
+      currentArray.filter((_, index) => index !== indexToDelete)
+    );
+  };
 
   return (
     <div>
-      <h1>My To Dos</h1>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="Write your to do..."
+        />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>
+            {item} <button onClick={() => deleteToDo(index)}>❌</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

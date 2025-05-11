@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
  * 예시:
  * import Woojin from "./assignments/woojin";
  */
+
 import Example from "./assignments/example";
 
 function App() {
