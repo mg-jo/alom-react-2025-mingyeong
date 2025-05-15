@@ -37,9 +37,9 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>My To Dos ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="form">
         <input
           onChange={onChange}
           value={toDo}
@@ -49,10 +49,13 @@ function App() {
         <button>Add To Do</button>
       </form>
       <hr />
-      <ul>
+      <ul className="list">
         {toDos.map((item, index) => (
           <li key={index}>
-            {item} <button onClick={() => deleteToDo(index)}>❌</button>
+            {item}{" "}
+            <button className="delete" onClick={() => deleteToDo(index)}>
+              ❌
+            </button>
           </li>
         ))}
       </ul>
