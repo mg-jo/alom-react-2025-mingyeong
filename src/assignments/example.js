@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
+  const [toDos, setToDos] = useState(() => {
+    const savedToDos = localStorage.getItem("toDos");
+    return savedToDos ? JSON.parse(savedToDos) : [];
+  });
 
   // 앱 시작 시 localStorage에서 불러오기
   useEffect(() => {
@@ -20,7 +23,7 @@ function App() {
   const onChange = (event) => setToDo(event.target.value);
   const onSubmit = (event) => {
     event.preventDefault(); // 새로고침 방지
-    if (toDo == "") {
+    if (toDo === "") {
       return;
     }
     setToDos((currentArray) => [...currentArray, toDo]);
